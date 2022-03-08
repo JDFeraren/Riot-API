@@ -35,7 +35,7 @@ function App() {
   async function getMatchInfo() {
     var API_CALL_STRING = `https://americas.api.riotgames.com/lol/match/v5/matches/${matchId}?api_key=${API_KEY}`; 
     axios.get(API_CALL_STRING).then(function (response) {
-      setMatchId(response.data);
+      setMatchInfo(response.data);
     }).catch(function (error) {
       console.log(error);
     });
@@ -59,6 +59,7 @@ function App() {
         <p>Summoner Level {playerData.summonerLevel}</p>
         <p>Puuid: {playerData.puuid}</p>
         <p>Matches {matches.join(", ")}</p>
+        { matchInfo["info"] && matchInfo["info"]["participants"].map((participant) => { return (<p>{participant["summonerName"]}</p>); }) }
       </> 
       :
       <><p>No player data</p></>
