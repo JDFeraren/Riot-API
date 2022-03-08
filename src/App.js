@@ -4,7 +4,9 @@ import axios from 'axios';
 function App() {
   const [summoner, setSummoner] = useState("");
   const [playerData, setPlayerData] = useState("");
-  const [matches, setMatches] = useState("");
+  const [matches, setMatches] = useState([]);
+  const [matchId, setMatchId] = useState("");
+  const [matchInfo, setMatchInfo] = useState("");
   const API_KEY = "RGAPI-6b544b93-a539-4f67-bd95-e27d24d75685";
 
   async function onClick(event) {
@@ -22,9 +24,18 @@ function App() {
   }
 
   async function getMatches() {
-    var API_CALL_STRING = `https://na1.api.riotgames.com/lol/match/v5/matches/by-puuid/${playerData.puuid}/ids?api_key${API_KEY}`; 
+    var API_CALL_STRING = `https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${playerData.puuid}/ids?api_key=${API_KEY}`; 
     axios.get(API_CALL_STRING).then(function (response) {
       setMatches(response.data);
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  async function getMatchInfo() {
+    var API_CALL_STRING = `https://americas.api.riotgames.com/lol/match/v5/matches/${matchId}?api_key=${API_KEY}`; 
+    axios.get(API_CALL_STRING).then(function (response) {
+      setMatchId(response.data);
     }).catch(function (error) {
       console.log(error);
     });
@@ -38,6 +49,8 @@ function App() {
       <input type="text" onChange={e => setSummoner(e.target.value)}></input>
       <button onClick={e => onClick(e)}>Search For Player</button>
       <button onClick={e => getMatches(e)}>Get Matches</button>
+      <input type="text" onChange={e => setMatchId(e.target.value)}></input>
+      <button onClick={e => getMatchInfo(e)}>Get MatchInfo</button>
     
 
       {JSON.stringify(playerData) !== "{}" ?
@@ -45,7 +58,7 @@ function App() {
         <p>{playerData.name}</p>
         <p>Summoner Level {playerData.summonerLevel}</p>
         <p>Puuid: {playerData.puuid}</p>
-        <p>Matches {matches}</p>
+        <p>Matches {matches.join(", ")}</p>
       </> 
       :
       <><p>No player data</p></>
