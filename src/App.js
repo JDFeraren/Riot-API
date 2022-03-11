@@ -1,72 +1,13 @@
-import {useState} from 'react';
-import axios from 'axios';
+import PlayerData from './components/playerInfo';
+import './App.css';
 
 function App() {
-  const [summoner, setSummoner] = useState("");
-  const [playerData, setPlayerData] = useState("");
-  const [matches, setMatches] = useState([]);
-  const [matchId, setMatchId] = useState("");
-  const [matchInfo, setMatchInfo] = useState("");
-  const API_KEY = "RGAPI-6b544b93-a539-4f67-bd95-e27d24d75685";
-
-  async function onClick(event) {
-    await searchForPlayer();
-  }
-
-  async function searchForPlayer() {
-    var API_CALL_STRING = `https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summoner}?api_key=${API_KEY}`;
-
-    await axios.get(API_CALL_STRING).then(function (response) {
-      setPlayerData(response.data);
-    }).catch(function (error) {
-      console.log(error);
-    });
-  }
-
-  async function getMatches() {
-    var API_CALL_STRING = `https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/${playerData.puuid}/ids?api_key=${API_KEY}`; 
-    axios.get(API_CALL_STRING).then(function (response) {
-      setMatches(response.data);
-    }).catch(function (error) {
-      console.log(error);
-    });
-  }
-
-  async function getMatchInfo() {
-    var API_CALL_STRING = `https://americas.api.riotgames.com/lol/match/v5/matches/${matchId}?api_key=${API_KEY}`; 
-    axios.get(API_CALL_STRING).then(function (response) {
-      setMatchInfo(response.data);
-    }).catch(function (error) {
-      console.log(error);
-    });
-  }
-
-  console.log(playerData);
 
   return (
     <div className="container">
-      <h1>Riot Player Search</h1>
-      <input type="text" onChange={e => setSummoner(e.target.value)}></input>
-      <button onClick={e => onClick(e)}>Search For Player</button>
-      <button onClick={e => getMatches(e)}>Get Matches</button>
-      <input type="text" onChange={e => setMatchId(e.target.value)}></input>
-      <button onClick={e => getMatchInfo(e)}>Get MatchInfo</button>
-    
-
-      {JSON.stringify(playerData) !== "{}" ?
-      <>
-        <p>{playerData.name}</p>
-        <p>Summoner Level {playerData.summonerLevel}</p>
-        <p>Puuid: {playerData.puuid}</p>
-        <p>Matches {matches.join(", ")}</p>
-        { matchInfo["info"] && matchInfo["info"]["participants"].map((participant) => { return (<p>{participant["summonerName"]}</p>); }) }
-      </> 
-      :
-      <><p>No player data</p></>
-      }
-
+            <PlayerData />
     </div>
-  );
+  );  
 }
 
 export default App;
