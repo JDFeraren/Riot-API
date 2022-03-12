@@ -40,7 +40,9 @@ function MatchData({matchList}) {
     }
 
     let info = matchData["info"];
+    let participants = matchData["info"]["participants"];
     console.log(info);
+    console.log(participants);
 
     return (
         <div>
