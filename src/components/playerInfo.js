@@ -20,6 +20,7 @@ function MatchData({matchList}) {
 
     const Match_API = `https://americas.api.riotgames.com/lol/match/v5/matches/NA1_4244578001?api_key=${API_KEY}`;
     const matchDataList = [];
+    const matchPlayerList = [];
 
     useEffect(() => {
         async function getPlayerData() {
@@ -38,14 +39,18 @@ function MatchData({matchList}) {
     for (var i = 0; i < 20; i++) {
         matchDataList.push(<li key={matchList[i]}>{matchList[i]}</li>);
     }
-
-    let info = matchData["info"];
-    let participants = matchData["info"]["participants"];
-    console.log(info);
-    console.log(participants);
+    
+  
+    // for (var i = 0; i < 10; i++) {
+    //     matchPlayerList.push(<li>{matchData["info"]["participants"][`${i}`]}</li>);
+    // }
+    console.log({matchData});
+ 
 
     return (
         <div>
+        <h4>Lastest Match:</h4>
+
         <h4>Last 20 Matches:</h4>
         <ul>{matchDataList}</ul>
         </div>
