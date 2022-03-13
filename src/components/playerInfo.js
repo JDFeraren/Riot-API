@@ -5,6 +5,7 @@ import TextField from '@mui/material/TextField';
 // Developer Key - (Update Every 24 Hours)
 const API_KEY = "RGAPI-fa5ed9e2-3921-4321-9927-89b21889df66";
 
+// Summoner function
 function Summoner({ summonerName, summonerLevel, matchList }) {
 
     return (
@@ -44,20 +45,20 @@ function MatchData({ matchList }) {
                 <li key={matchList[i]}>{matchList[i]}</li>
             );
     }
-    
-  
+
+
     // for (var i = 0; i < 10; i++) {
     //     matchPlayerList.push(<li>{matchData["info"]["participants"][`${i}`]}</li>);
     // }
-    console.log({matchData});
- 
+    console.log({ matchData });
+
 
     return (
         <div>
-        <h4>Lastest Match:</h4>
+            <h4>Lastest Match:</h4>
 
-        <h4>Last 20 Matches:</h4>
-        <ul>{matchDataList}</ul>
+            <h4>Last 20 Matches:</h4>
+            <ul>{matchDataList}</ul>
         </div>
     )
 }
