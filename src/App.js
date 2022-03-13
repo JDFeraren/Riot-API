@@ -5,9 +5,9 @@ function App() {
 
   return (
     <div className="container">
-            <PlayerData />
+      <PlayerData />
     </div>
-  );  
+  );
 }
 
 export default App;
