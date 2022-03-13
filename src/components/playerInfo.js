@@ -1,21 +1,22 @@
-import React, {useState, useEffect} from 'react' ;
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import TextField from '@mui/material/TextField';
 
 // Developer Key - (Update Every 24 Hours)
 const API_KEY = "RGAPI-fa5ed9e2-3921-4321-9927-89b21889df66";
 
-function Summoner({summonerName, summonerLevel, matchList}) {
+function Summoner({ summonerName, summonerLevel, matchList }) {
 
     return (
         <div>
             <h2>Summoner Name: {summonerName}</h2>
             <h3>Summoner Level: {summonerLevel}</h3>
-            <MatchData matchList={matchList}/>
+            <MatchData matchList={matchList} />
         </div>
     )
 }
 
-function MatchData({matchList}) {
+function MatchData({ matchList }) {
     const [matchData, setMatchData] = useState([]);
 
     const Match_API = `https://americas.api.riotgames.com/lol/match/v5/matches/NA1_4244578001?api_key=${API_KEY}`;
@@ -31,23 +32,26 @@ function MatchData({matchList}) {
             } catch (error) {
                 console.log(error);
             }
-          }
-          getPlayerData();
+        }
+        getPlayerData();
     }, [Match_API]);
 
     for (var i = 0; i < 20; i++) {
-        matchDataList.push(<li key={matchList[i]}>{matchList[i]}</li>);
+        matchDataList.push
+            (
+                <li key={matchList[i]}>{matchList[i]}</li>
+            );
     }
 
     let info = matchData["info"];
-    let participants = matchData["info"]["participants"];
+    // let participants = matchData["info"]["participants"];
     console.log(info);
-    console.log(participants);
+    // console.log(participants);
 
     return (
         <div>
-        <h4>Last 20 Matches:</h4>
-        <ul>{matchDataList}</ul>
+            <h4>Last 20 Matches:</h4>
+            <ul>{matchDataList}</ul>
         </div>
     )
 }
@@ -73,8 +77,8 @@ function PlayerData() {
             } catch (error) {
                 console.log(error);
             }
-          }
-          getPlayerData();
+        }
+        getPlayerData();
     }, [Summoner_API]);
 
     // Match List API Request
@@ -88,21 +92,22 @@ function PlayerData() {
             } catch (error) {
                 console.log(error);
             }
-          }
-          getMatchList();
+        }
+        getMatchList();
     }, [MatchList_API]);
 
     return (
         <div>
             <h1>Riot Player Search</h1>
-            <input type="text" onChange={e => setSearchText(e.target.value)}></input>
-            <label>Search For Player</label>
-            {JSON.stringify(playerData) !== '{}' ? 
-            <>
-            <Summoner summonerName={playerData.name} summonerLevel={playerData.summonerLevel} matchList={matchList}/>
-            </>
-            :
-            <><p>No player data</p></>
+            {/* <input type="text" onChange={e => setSearchText(e.target.value)}></input> */}
+            <TextField id="standard-basic" label="Search For Player" variant="standard" onChange={e => setSearchText(e.target.value)} sx={{ input: { color: 'black', outline: 'white' } }} />
+            {/* <label>Search For Player</label> */}
+            {JSON.stringify(playerData) !== '{}' ?
+                <>
+                    <Summoner summonerName={playerData.name} summonerLevel={playerData.summonerLevel} matchList={matchList} />
+                </>
+                :
+                <><p>No player data</p></>
             }
         </div>
     )
