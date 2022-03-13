@@ -16,6 +16,7 @@ function Summoner({ summonerName, summonerLevel, matchList }) {
     )
 }
 
+// Match Data
 function MatchData({ matchList }) {
     const [matchData, setMatchData] = useState([]);
 
